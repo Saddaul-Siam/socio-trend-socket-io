@@ -1,10 +1,24 @@
-const port = process.env.PORT || 8900;
+const express = require("express");
+const http = require("http");
 
-const io = require("socket.io")(port, {
+const app = express();
+const port = process.env.PORT || 8900;
+const server = http.createServer(app);
+
+const io = require("socket.io")(server, {
   cors: {
-    origin:"https://socio-trend.vercel.app",
+    origin: "http://localhost:3000",
   },
 });
+
+// const io = require("socket.io")(port, {
+//   cors: {
+//     origin: "http://localhost:3000", // || "https://socio-trend.vercel.app/",
+//   },
+// });
+
+// middleware
+app.use(express.json());
 
 let users = [];
 
@@ -46,4 +60,8 @@ io.on("connection", (socket) => {
     removeUser(socket.id);
     io.emit("getUsers", users);
   });
+});
+
+server.listen(port, "0.0.0.0", () => {
+  console.log("server started");
 });
