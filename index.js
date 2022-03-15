@@ -11,12 +11,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-// const io = require("socket.io")(port, {
-//   cors: {
-//     origin: "http://localhost:3000", // || "https://socio-trend.vercel.app/",
-//   },
-// });
-
 // middleware
 app.use(express.json());
 
